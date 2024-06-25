@@ -1,0 +1,6 @@
+[submodule "SnEngine/vendor/spdlog"]
+	path = SnEngine/vendor/spdlog
+	url = https://github.com/gabime/spdlog
+[submodule "SnEngine/vendor/GLFW"]
+	path = SnEngine/vendor/GLFW
+	url = https://github.com/TheCherno/glfw

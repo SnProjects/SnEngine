@@ -1,14 +1,21 @@
 #pragma once
 
 #ifdef SN_PLATFORM_WINDOWS
-    #ifdef SN_BUILD_DLL
-        #define SN_API __declspec(dllexport)
-    #else
-        #define SN_API __declspec(dllimport)
-    #endif
-
+#if SN_DYNAMIC_LINK
+        #ifdef SN_BUILD_DLL
+            #define SN_API __declspec(dllexport)
+        #else
+            #define SN_API __declspec(dllimport)
+        #endif
+#else
+    #define SN_API
+#endif
 #else
     #error SnEngine only supports Windows!
+#endif
+
+#ifdef SN_DEBUG
+    #define SN_ENABLE_ASSERTS
 #endif
 
 #ifdef SN_ENABLE_ASSERTS

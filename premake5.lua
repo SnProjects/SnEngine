@@ -1,5 +1,6 @@
 ﻿workspace "SnEngine"
     architecture "x64"
+    startproject "Sandbox"
     
     configurations
     {
@@ -8,6 +9,8 @@
         "Dist"
     }
     
+
+
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- Include directories relative to root folder (solution directory)
@@ -15,16 +18,22 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "SnEngine/vendor/GLFW/include"
 IncludeDir["Glad"] = "SnEngine/vendor/Glad/include"
 IncludeDir["ImGui"] = "SnEngine/vendor/imgui"
+IncludeDir["glm"] = "SnEngine/vendor/glm"
 
-include "SnEngine/vendor/GLFW"
-include "SnEngine/vendor/Glad"
-include "SnEngine/vendor/imgui"
+group "Dependencies"
+    include "SnEngine/vendor/GLFW"
+    include "SnEngine/vendor/Glad"
+    include "SnEngine/vendor/imgui"
+
+group ""
     
 project "SnEngine"
 
     location "SnEngine"
-    kind "SharedLib"
+    kind "StaticLib"
     language "C++"
+    cppdialect "C++17"
+    staticruntime "on"
     
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -35,7 +44,14 @@ project "SnEngine"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/vendor/glm/glm/**.hpp",
+        "%{prj.name}/vendor/glm/glm/**.inl"
+    }
+
+    defines
+    {
+        "_CRT_SECURE_NO_WARNINGS"
     }
     
     includedirs
@@ -44,7 +60,8 @@ project "SnEngine"
         "%{prj.name}/vendor/spdlog/include",
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
-        "%{IncludeDir.ImGui}"
+        "%{IncludeDir.ImGui}",
+        "%{IncludeDir.glm}"
     }
 
     links
@@ -56,8 +73,6 @@ project "SnEngine"
     }
     
     filter "system:windows"
-        cppdialect "C++17"
-        staticruntime "On"
         systemversion "latest"
         
         defines
@@ -67,31 +82,28 @@ project "SnEngine"
             "GLFW_INCLUDE_NONE"
         }
         
-        postbuildcommands
-        {
-            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
-        }
-        
     filter "configurations:Debug"
         defines "SN_DEBUG"
-        symbols "On"
-        buildoptions "/MDd"
+        symbols "on"
+        runtime "Debug"
         
         
     filter "configurations:Release"
         defines "SN_RELEASE"
-        optimize "On"
-        buildoptions "/MD"
+        optimize "on"
+        runtime "Release"
         
     filter "configurations:Dist"
         defines "SN_DIST"
-        optimize "On"
-        buildoptions "/MD"
+        optimize "on"
+        runtime "Release"
         
 project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
     language "C++"
+    cppdialect "C++17"
+    staticruntime "on"
     
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -105,7 +117,9 @@ project "Sandbox"
     includedirs
     {
         "SnEngine/vendor/spdlog/include",
-        "SnEngine/src"
+        "SnEngine/src",
+        "SnEngine/vendor",
+        "%{IncludeDir.glm}"
     }
     
     links
@@ -114,8 +128,6 @@ project "Sandbox"
     }
     
     filter "system:windows"
-        cppdialect "C++17"
-        staticruntime "On"
         systemversion "latest"
         
         defines
@@ -125,18 +137,15 @@ project "Sandbox"
         
     filter "configurations:Debug"
         defines "SN_DEBUG"
-        symbols "On"
-        buildoptions "/MDd"
+        symbols "on"
+        runtime "Debug"
         
     filter "configurations:Release"
         defines "SN_RELEASE"
-        optimize "On"
-        buildoptions "/MD"
+        optimize "on"
+        runtime "Release"
         
     filter "configurations:Dist"
         defines "SN_DIST"
-        optimize "On"
-        buildoptions "/MD"
-   
-
-    
+        optimize "on"
+        runtime "Release"

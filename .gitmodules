@@ -7,3 +7,6 @@
 [submodule "SnEngine/vendor/imgui"]
 	path = SnEngine/vendor/imgui
 	url = https://github.com/TheCherno/imgui
+[submodule "SnEngine/vendor/glm"]
+	path = SnEngine/vendor/glm
+	url = https://github.com/g-truc/glm

@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "snpch.h"
 #include "SnEngine/Core.h"
 
 namespace SnEngine

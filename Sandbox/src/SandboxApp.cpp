@@ -24,6 +24,7 @@ class Sandbox : public SnEngine::Application
 public:
 	Sandbox() {
 		PushLayer(new ExampleLayer());
+		PushOverlay(new SnEngine::ImGuiLayer());
 	}
 
 	~Sandbox() {

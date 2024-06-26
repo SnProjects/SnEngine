@@ -13,8 +13,12 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Include directories relative to root folder (solution directory)
 IncludeDir = {}
 IncludeDir["GLFW"] = "SnEngine/vendor/GLFW/include"
+IncludeDir["Glad"] = "SnEngine/vendor/Glad/include"
+IncludeDir["ImGui"] = "SnEngine/vendor/imgui"
 
 include "SnEngine/vendor/GLFW"
+include "SnEngine/vendor/Glad"
+include "SnEngine/vendor/imgui"
     
 project "SnEngine"
 
@@ -38,12 +42,16 @@ project "SnEngine"
     {
         "%{prj.name}/src",
         "%{prj.name}/vendor/spdlog/include",
-        "%{IncludeDir.GLFW}"
+        "%{IncludeDir.GLFW}",
+        "%{IncludeDir.Glad}",
+        "%{IncludeDir.ImGui}"
     }
 
     links
     {
         "GLFW",
+        "Glad",
+        "ImGui",
         "opengl32.lib"
     }
     
@@ -55,7 +63,8 @@ project "SnEngine"
         defines
         {
             "SN_PLATFORM_WINDOWS",
-            "SN_BUILD_DLL"
+            "SN_BUILD_DLL",
+            "GLFW_INCLUDE_NONE"
         }
         
         postbuildcommands

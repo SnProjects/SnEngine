@@ -2,7 +2,10 @@
 <project version="4">
   <component name="UserContentModel">
     <attachedFolders />
-    <explicitIncludes />
+    <explicitIncludes>
+      <Path>SnEngine/src/Platform/OpenGL/imgui_impl_opengl3.cpp</Path>
+      <Path>SnEngine/src/Platform/OpenGL/imgui_impl_opengl3.h</Path>
+    </explicitIncludes>
     <explicitExcludes />
   </component>
 </project>

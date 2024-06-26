@@ -4,3 +4,6 @@
 [submodule "SnEngine/vendor/GLFW"]
 	path = SnEngine/vendor/GLFW
 	url = https://github.com/TheCherno/glfw
+[submodule "SnEngine/vendor/imgui"]
+	path = SnEngine/vendor/imgui
+	url = https://github.com/TheCherno/imgui

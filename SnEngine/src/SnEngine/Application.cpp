@@ -45,7 +45,7 @@ namespace SnEngine
     void Application::OnEvent(Event& e)
     {
         EventDispatcher dispatcher(e);
-        SN_CORE_TRACE("{0}", e);
+        // SN_CORE_TRACE("{0}", e);
         dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 
         for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )

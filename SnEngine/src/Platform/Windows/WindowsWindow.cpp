@@ -5,6 +5,8 @@
 #include "SnEngine/Events/MouseEvent.h"
 #include "SnEngine/Events/KeyEvent.h"
 
+#include "Platform/OpenGL/OpenGLContext.h"
+
 #include <glad/glad.h>
 
 namespace SnEngine
@@ -23,12 +25,12 @@ static bool s_GLFWInitialized = false;
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
-		Init(props);
+		WindowsWindow::Init(props);
 	}
 
 	WindowsWindow::~WindowsWindow()
 	{
-		Shutdown();
+		WindowsWindow::Shutdown();
 	}
 
 	void WindowsWindow::Init(const WindowProps& props)
@@ -36,22 +38,23 @@ static bool s_GLFWInitialized = false;
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
-
+		
 		SN_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
 		if (!s_GLFWInitialized)
 		{
 			// TODO: glfwTerminate on system shutdown
 			int success = glfwInit();
-			SN_CORE_ASSERT(success, "Could not intialize GLFW!");
+			SN_CORE_ASSERT(success, "Could not intialize GLFW!")
 			glfwSetErrorCallback(GLFWErrorCallback);
 			s_GLFWInitialized = true;
 		}
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		SN_CORE_ASSERT(status, "Failed to initialize Glad!");
+		m_Context = new OpenGLContext(m_Window);
+
+		m_Context->Init();
+		
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
@@ -97,6 +100,7 @@ static bool s_GLFWInitialized = false;
 					data.EventCallback(event);
 					break;
 				}
+			default: break;
 			}
 		});
 
@@ -104,7 +108,7 @@ static bool s_GLFWInitialized = false;
 		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-			KeyTypedEvent event(keycode);
+			KeyTypedEvent event((int)keycode);
 			data.EventCallback(event);
 		});
 
@@ -126,6 +130,7 @@ static bool s_GLFWInitialized = false;
 					data.EventCallback(event);
 					break;
 				}
+			default: break;
 			}
 		});
 
@@ -154,7 +159,8 @@ static bool s_GLFWInitialized = false;
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+
+		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)

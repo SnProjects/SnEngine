@@ -3,6 +3,8 @@
 #include "SnEngine/Window.h"
 #include <GLFW/glfw3.h>
 
+#include "SnEngine/Renderer/RendererContext.h"
+
 namespace SnEngine
 {
     class WindowsWindow : public Window
@@ -27,6 +29,7 @@ namespace SnEngine
 		virtual void Shutdown();
 	private:
 		GLFWwindow* m_Window;
+    	RendererContext* m_Context;
 
 		struct WindowData
 		{

@@ -1,6 +1,7 @@
 ﻿#pragma once
 
-// From glfw3.h
+#if defined(SN_PLATFORM_WINDOWS)
+  // From glfw3.h
 #define SN_KEY_SPACE              32
 #define SN_KEY_APOSTROPHE         39  /* ' */
 #define SN_KEY_COMMA              44  /* , */
@@ -123,3 +124,4 @@
 #define SN_KEY_RIGHT_ALT          346
 #define SN_KEY_RIGHT_SUPER        347
 #define SN_KEY_MENU               348
+#endif

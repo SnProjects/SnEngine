@@ -33,6 +33,7 @@ No contributing guidelines yet
 ## Authors
 - [Snowy7](https://www.github.com/Snowy7)
 - [Snowy7x](https://www.github.com/Snowy7x)
+- [Slo](https://github.com/sloomygames)
 
 ## Acknowledgements
 - [TheCherno](https://www.github.com/TheCherno)

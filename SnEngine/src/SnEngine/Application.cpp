@@ -24,6 +24,8 @@ namespace SnEngine
         m_ImGuiLayer = new ImGuiLayer();
         PushOverlay(m_ImGuiLayer);
 
+        // Draw a triangle
+        
         // Vertex Array
         glGenVertexArrays(1, &m_VertexArray);
         glBindVertexArray(m_VertexArray);

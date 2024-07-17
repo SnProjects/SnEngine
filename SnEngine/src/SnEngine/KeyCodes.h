@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #if defined(SN_PLATFORM_WINDOWS)
-  // From glfw3.h
+// From glfw3.h
 #define SN_KEY_SPACE              32
 #define SN_KEY_APOSTROPHE         39  /* ' */
 #define SN_KEY_COMMA              44  /* , */
